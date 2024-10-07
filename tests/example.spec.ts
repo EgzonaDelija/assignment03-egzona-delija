@@ -83,5 +83,11 @@ test.describe('Backend tests', () => {
       }
 
 });
+
+expect(createBillResponse.ok()).toBeTruthy();
+const billData = await createBillResponse.json();
+expect(billData.value).toBe(500);  
+expect(billData.paid).toBe(true);  
+
 }); 
 }); 
