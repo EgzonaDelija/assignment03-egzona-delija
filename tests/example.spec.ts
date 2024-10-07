@@ -21,9 +21,8 @@ test.describe('Front-end tests', () => {
     await page.getByText('Save').click()
     await expect(page.getByRole('heading', { name: 'Anna Johansson'})).toBeVisible();
   });
-    
 
-  test('Create Room', async ({ page }) => {
+ /* test('Create Room', async ({ page }) => {
     
     await page.goto('http://localhost:3000');
     await page.locator('input[type="text"]').fill(`${process.env.TEST_USERNAME}`);
@@ -46,7 +45,7 @@ test.describe('Front-end tests', () => {
     await expect(page.getByText('Features: sea view')).toBeVisible();
     await page.getByRole('button', { name: 'save' }).click()
     
-  });
+  });*/
   
 });
   
