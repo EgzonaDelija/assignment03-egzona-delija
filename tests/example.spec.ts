@@ -58,7 +58,30 @@ test.describe('Backend tests', () => {
 
 
   });  
+  test('Create a bill', async ({ request }) => {
+
+    const response = await request.post('http://localhost:3000/api/login', {
+
+      data:{
+
+        "username": `${process.env.TEST_USERNAME}`,
+
+        "password": `${process.env.TEST_PASSWORD}`
+
+      }      
+
+    });
+
+    expect (response.ok()).toBeTruthy();    
+
+
+    const createBillResponse = await request.post('http://localhost:3000/api/bills', {
+
+      data: {
+        "value": 500,  
+        "paid": true   
+      }
 
 });
-
-  
+}); 
+}); 
