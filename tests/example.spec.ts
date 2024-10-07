@@ -46,9 +46,16 @@ test.describe('Backend tests', () => {
 
     });
 
-    expect (response.ok()).toBeTruthy();    
+    expect (response.ok()).toBeTruthy();  
+    
+    const loginData = await response.json();  // Rätt variabel 'response'
+    const authToken = loginData.token;
 
     const createClientResponse = await request.post('http://localhost:3000/api/clients', {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,  // Autentisera med token
+        'Content-Type': 'application/json'
+      },
       data: {
         "name": "Anna Johansson",
         "email": "Anna@HJohansson.se",
@@ -57,6 +64,8 @@ test.describe('Backend tests', () => {
     });
     expect(createClientResponse.ok()).toBeTruthy();
   });
+
+
 
   });  
   test('Create a bill', async ({ request }) => {
@@ -71,7 +80,15 @@ test.describe('Backend tests', () => {
 
     expect (response.ok()).toBeTruthy();    
 
+    const loginData = await response.json();
+    const authToken = loginData.token;
+
     const createBillResponse = await request.post('http://localhost:3000/api/bills', {
+
+      headers: {
+        'Authorization': `Bearer ${authToken}`,  // Autentisera med token
+        'Content-Type': 'application/json' 
+      },
       data: {
         "value": 500,  
         "paid": true   
