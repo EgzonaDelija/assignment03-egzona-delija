@@ -42,6 +42,7 @@ test.describe('Front-end tests', () => {
 
 });
 
+test.describe('Backend  tests', () => {
   test('Backend - Get all Clients', async ({ request }) => {
   const response = await request.post('http://localhost:3000/api/login', {
     headers: {
@@ -103,6 +104,8 @@ test(' Backend - Get all Rooms', async ({ request }) => {
   expect(getPostsResponse.status()).toBe(200);
   const getAllRooms = await getPostsResponse.json();
   console.log(getAllRooms);
+
+});
 
 });
 
