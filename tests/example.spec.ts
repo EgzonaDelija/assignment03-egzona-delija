@@ -71,3 +71,38 @@ test.describe('Front-end tests', () => {
   const getAllClients = await getPostsResponse.json();
   console.log(getAllClients);
 });
+
+
+test(' Backend - Get all Rooms', async ({ request }) => {
+
+  const response = await request.post('http://localhost:3000/api/login', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      username: process.env.TEST_USERNAME,
+      password: process.env.TEST_PASSWORD
+    }
+  });
+
+  const jsonResponse = await response.json();
+  const accessToken = jsonResponse.token;
+  const username = process.env.TEST_USERNAME;
+
+
+  const getPostsResponse = await request.get('http://localhost:3000/api/Rooms', {
+    headers: {
+      'x-user-auth': JSON.stringify({
+        username: username,
+        token: accessToken
+      }),
+      'Content-Type': 'application/json'
+    }
+  });
+  expect(getPostsResponse.ok()).toBeTruthy();
+  expect(getPostsResponse.status()).toBe(200);
+  const getAllRooms = await getPostsResponse.json();
+  console.log(getAllRooms);
+
+});
+
