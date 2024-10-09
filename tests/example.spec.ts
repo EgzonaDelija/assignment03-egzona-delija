@@ -123,7 +123,7 @@ test('Delete a client', async ({ request }) => {
   const username = process.env.TEST_USERNAME;
 
   // Skicka DELETE-förfrågan för att ta bort en klient
-  const deleteResponse = await request.delete('http://localhost:3000/api/client/3', { // '123' är ID:t på klienten du vill ta bort
+  const deleteResponse = await request.delete('http://localhost:3000/api/clients/3', { // '123' är ID:t på klienten du vill ta bort
       headers: {
           'x-user-auth': JSON.stringify({
               username: username,
