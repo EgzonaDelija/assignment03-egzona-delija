@@ -16,7 +16,7 @@ test.describe('Front-end tests', () => {
     await page.getByRole('link', { name: 'Create Client' }).click();
     await expect(page.getByRole('heading', { name: 'New Client'})).toBeVisible();
     await page.fill('#app > div > div:nth-child(2) > div:nth-child(1) > input[type=text]', "Egzona Delija");
-    await page.fill('#app > div > div:nth-child(2) > div:nth-child(2) > input[type=email]', "Egzona@Delija.se");
+    await page.fill('#app > div > div:nth-child(2) > div:nth-child(2) > input[type=email]', "Egzona@gmail.se");
     await page.fill('#app > div > div:nth-child(2) > div:nth-child(3) > input[type=text]', "070200000");
     await page.getByText('Save').click()
     await expect(page.getByRole('heading', { name: 'Anna Johansson'})).toBeVisible();
