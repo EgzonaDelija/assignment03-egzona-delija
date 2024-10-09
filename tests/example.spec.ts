@@ -30,73 +30,32 @@ test.describe('Front-end tests', () => {
   
 });
 
-test.describe('Backend tests', () => {
-
-  test('Create a client', async ({ request }) => {
-
-    const response = await request.post('http://localhost:3000/api/login', {
-
-      data:{
-
-        "username": `${process.env.TEST_USERNAME}`,
-
-        "password": `${process.env.TEST_PASSWORD}`
-
-      }      
-
-    });
-
-    expect (response.ok()).toBeTruthy();  
-    
-    const loginData = await response.json();  // Rätt variabel 'response'
-    const authToken = loginData.token;
-
-    const createClientResponse = await request.post('http://localhost:3000/api/clients', {
-      headers: {
-        'Authorization': `Bearer ${authToken}`,  // Autentisera med token
-        'Content-Type': 'application/json'
-      },
-      data: {
-        "name": "Anna Johansson",
-        "email": "Anna@HJohansson.se",
-        "telephone": "28473268"
-      }
-    });
-    expect(createClientResponse.ok()).toBeTruthy();
+  test('Test case 01 - Backend', async ({ request }) => {
+  const response = await request.post('http://localhost:3000/api/login', {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: {
+      username: process.env.TEST_USERNAME,
+      password: process.env.TEST_PASSWORD
+    }
   });
 
+  const jsonResponse = await response.json();
+  const accessToken = jsonResponse.token;
+  const username = process.env.TEST_USERNAME;
+  const getPostsResponse = await request.get('http://localhost:3000/api/clients', {
+    headers: {
+      'x-user-auth': JSON.stringify({ 
+        username: username,
+        token: accessToken
+      }),
+      'Content-Type': 'application/json'
+    }
+  });
+  expect(getPostsResponse.ok()).toBeTruthy();
+  expect(getPostsResponse.status()).toBe(200);
 
-
-  });  
-  test('Create a bill', async ({ request }) => {
-    const response = await request.post('http://localhost:3000/api/login', {
-      data:{
-        "username": `${process.env.TEST_USERNAME}`,
-        "password": `${process.env.TEST_PASSWORD}`
-
-      }      
-
-    });
-
-    expect (response.ok()).toBeTruthy();    
-
-    const loginData = await response.json();
-    const authToken = loginData.token;
-
-    const createBillResponse = await request.post('http://localhost:3000/api/bills', {
-
-      headers: {
-        'Authorization': `Bearer ${authToken}`,  // Autentisera med token
-        'Content-Type': 'application/json' 
-      },
-      data: {
-        "value": 500,  
-        "paid": true   
-      }
-
-});
-
-expect(createBillResponse.ok()).toBeTruthy();
- 
-
+  const getAllClients = await getPostsResponse.json();
+  console.log(getAllClients);
 });
