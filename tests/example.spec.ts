@@ -105,3 +105,38 @@ test(' Backend - Get all Rooms', async ({ request }) => {
   console.log(getAllRooms);
 
 });
+
+test('Delete a client', async ({ request }) => {
+  // Logga in för att få en token
+  const response = await request.post('http://localhost:3000/api/login', {
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      data: {
+          username: process.env.TEST_USERNAME,
+          password: process.env.TEST_PASSWORD
+      }
+  });
+
+  const jsonResponse = await response.json();
+  const accessToken = jsonResponse.token;
+  const username = process.env.TEST_USERNAME;
+
+  // Skicka DELETE-förfrågan för att ta bort en klient
+  const deleteResponse = await request.delete('http://localhost:3000/api/clients/1', { // '123' är ID:t på klienten du vill ta bort
+      headers: {
+          'x-user-auth': JSON.stringify({
+              username: username,
+              token: accessToken
+          }),
+          'Content-Type': 'application/json'
+      }
+  });
+
+  // Kontrollera att svaret är korrekt
+  expect(deleteResponse.ok()).toBeTruthy(); // Kontrollera att begäran var lyckad
+  expect(deleteResponse.status()).toBe(200); // Kontrollera att statuskoden är 200 eller 204
+
+  const deleteResult = await deleteResponse.json();
+  console.log(deleteResult); // Detta kan hjälpa dig att se om något specifikt returneras efter borttagningen
+});
