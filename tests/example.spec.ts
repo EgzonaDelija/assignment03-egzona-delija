@@ -19,7 +19,7 @@ test.describe('Front-end tests', () => {
     await page.fill('#app > div > div:nth-child(2) > div:nth-child(2) > input[type=email]', "Egzona@gmail.se");
     await page.fill('#app > div > div:nth-child(2) > div:nth-child(3) > input[type=text]', "070200000");
     await page.getByText('Save').click()
-    await expect(page.getByRole('heading', { name: 'Anna Johansson'})).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Egzona Delija'})).toBeVisible();
   });
 
   test('Log in and log out', async ({ page }) => {
