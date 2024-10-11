@@ -1,3 +1,4 @@
+#Pipeline-filen körs när något nytt "pushas" till gh-actions
 name: Pipeline
 
 on: 
@@ -12,6 +13,7 @@ on:
     branches: 
      - gh-actions
 
+# Jobbet heter e2e-tests och körs på en Ubuntu-maski
 jobs:
 
   e2e-tests:
@@ -20,7 +22,7 @@ jobs:
 
     steps:
 
-      #Checkout 
+      #Hämta koden från GitHub
 
       - name: Fetch code /Checkout code 
 
